@@ -9,4 +9,5 @@
     <string name="remover_integrante">Remover Integrante</string>
     <string name="editar_integrante">Editar Integrante</string>
     <string name="add_integrante">Add Integrante</string>
+    <string name="calcular">Calcular</string>
 </resources>

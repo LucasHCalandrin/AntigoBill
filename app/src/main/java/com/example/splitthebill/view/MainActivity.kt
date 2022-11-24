@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.splitthebill.R
@@ -72,6 +73,29 @@ class MainActivity : AppCompatActivity() {
                 integranteIntent.putExtra(EXTRA_INTEGRANTE, integrante)
                 integranteIntent.putExtra(VIEW_INTEGRANTE, true)
                 startActivity(integranteIntent)
+            }
+        }
+
+        if(integranteList.count() >= 2){ amb.calcularBtn.setVisibility(View.VISIBLE) }
+
+        amb.calcularBtn.setOnClickListener {
+            var numIntegrantes = integranteList.count()
+            var totalGasto = 0
+            var valorDividido = 0
+            integranteList.forEach { valor -> totalGasto += valor.gastou.toInt()}
+            valorDividido = totalGasto/numIntegrantes
+            integranteList.forEach {
+                if(valorDividido > it.gastou.toInt()){
+                    var retorno = valorDividido - it.gastou.toInt()
+                    Toast.makeText(this, "${it.nome} deve pagar ${retorno}", Toast.LENGTH_SHORT).show()
+                }
+                else if (valorDividido < it.gastou.toInt()){
+                    var receber = it.gastou.toInt() - valorDividido
+                    Toast.makeText(this, "${it.nome} deve receber ${receber}", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(this, "${it.nome} contribuiu com o valor exato", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
